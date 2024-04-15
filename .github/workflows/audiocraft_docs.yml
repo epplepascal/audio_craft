@@ -1,7 +1,7 @@
 name: audiocraft_docs
 on:
   push:
-    branches: [ main ]
+    branches: [ main-audio ]
 
 jobs:
   run_docs:

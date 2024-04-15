@@ -1,9 +1,9 @@
 name: audiocraft_linter
 on:
   push:
-    branches: [ main ]
+    branches: [ main-audio ]
   pull_request:
-    branches: [ main ]
+    branches: [ main-audio ]
 
 jobs:
   run_linter:
