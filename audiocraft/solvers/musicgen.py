@@ -43,6 +43,7 @@ class MusicGenSolver(base.StandardSolver):
             'temp': self.cfg.generate.lm.temp,
             'top_k': self.cfg.generate.lm.top_k,
             'top_p': self.cfg.generate.lm.top_p,
+            'cfg_coef': self.cfg.generate.lm.cfg_coef,
         }
         self._best_metric_name: tp.Optional[str] = 'ce'
 
@@ -351,6 +352,7 @@ class MusicGenSolver(base.StandardSolver):
 
     def run_step(self, idx: int, batch: tp.Tuple[torch.Tensor, tp.List[SegmentWithAttributes]], metrics: dict) -> dict:
         """Perform one training or valid step on a given batch."""
+        # breakpoint()
         check_synchronization_points = idx == 1 and self.device == 'cuda'
 
         condition_tensors, audio_tokens, padding_mask = self._prepare_tokens_and_attributes(
@@ -474,7 +476,6 @@ class MusicGenSolver(base.StandardSolver):
             gen_tokens = self.model.generate(
                 prompt_tokens, attributes, max_gen_len=total_gen_len,
                 num_samples=num_samples, **self.generation_params)
-
         # generate audio from tokens
         assert gen_tokens.dim() == 3
         gen_audio = self.compression_model.decode(gen_tokens, None)

@@ -240,6 +240,7 @@ class LMModel(StreamingModule):
         """
         B, K, S = sequence.shape
         assert K == self.num_codebooks, "Sequence shape must match the specified number of codebooks"
+        # breakpoint()
         input_ = sum([self.emb[k](sequence[:, k]) for k in range(K)])
         if condition_tensors is None:
             assert not self._is_streaming, "Conditions tensors should be precomputed when streaming."
@@ -297,6 +298,7 @@ class LMModel(StreamingModule):
                     Given the specified interleaving strategies, parts of the logits and codes should
                     not be considered as valid predictions because of invalid context.
         """
+        # breakpoint()
         B, K, T = codes.shape
         codes = codes.contiguous()
         # map codes [B, K, T] into pattern sequence [B, K, S] using special_token_id for masked tokens
@@ -371,6 +373,7 @@ class LMModel(StreamingModule):
                 conditions=[], condition_tensors=condition_tensors)
             if condition_tensors:
                 cond_logits, uncond_logits = all_logits.split(B, dim=0)  # [B, K, T, card]
+                ### Hard-coded modification of cfg_coef
                 logits = uncond_logits + (cond_logits - uncond_logits) * cfg_coef
             else:
                 logits = all_logits
@@ -493,10 +496,12 @@ class LMModel(StreamingModule):
         start_offset_sequence = pattern.get_first_step_with_timesteps(start_offset)
         assert start_offset_sequence is not None
 
+
         with self.streaming():
             unconditional_state = self.get_streaming_state()
             prev_offset = 0
             gen_sequence_len = gen_sequence.shape[-1]  # gen_sequence shape is [B, K, S]
+            breakpoint()
             for offset in range(start_offset_sequence, gen_sequence_len):
                 # get current sequence (note that the streaming API is providing the caching over previous offsets)
                 curr_sequence = gen_sequence[..., prev_offset:offset]

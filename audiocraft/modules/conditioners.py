@@ -1371,7 +1371,6 @@ class ConditionFuser(StreamingModule):
                 used for cross-attention or None if no cross attention inputs exist.
         """
         B, T, _ = input.shape
-
         if 'offsets' in self._streaming_state:
             first_step = False
             offsets = self._streaming_state['offsets']
@@ -1383,7 +1382,10 @@ class ConditionFuser(StreamingModule):
             f"given conditions contain unknown attributes for fuser, " \
             f"expected {self.cond2fuse.keys()}, got {conditions.keys()}"
         cross_attention_output = None
+        # breakpoint()
         for cond_type, (cond, cond_mask) in conditions.items():
+            if cond_type != 'description':
+                breakpoint()
             op = self.cond2fuse[cond_type]
             if op == 'sum':
                 input += cond

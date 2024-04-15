@@ -1,0 +1,10 @@
+# @package __global__
+
+datasource:
+  max_sample_rate: 48000
+  max_channels: 1
+
+  train: egs/musiccaps_example
+  valid: egs/musiccaps_example
+  evaluate: egs/musiccaps_example
+  generate: egs/musiccaps_example

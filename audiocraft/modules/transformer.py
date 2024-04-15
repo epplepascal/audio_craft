@@ -692,7 +692,6 @@ class StreamingTransformer(StreamingModule):
 
     def forward(self, x: torch.Tensor, *args, **kwargs):
         B, T, C = x.shape
-
         if 'offsets' in self._streaming_state:
             offsets = self._streaming_state['offsets']
         else:

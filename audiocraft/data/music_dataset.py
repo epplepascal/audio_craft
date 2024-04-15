@@ -221,7 +221,6 @@ class MusicDataset(InfoAudioDataset):
         wav, info = super().__getitem__(index)
         info_data = info.to_dict()
         music_info_path = Path(info.meta.path).with_suffix('.json')
-
         if Path(music_info_path).exists():
             with open(music_info_path, 'r') as json_file:
                 music_data = json.load(json_file)

@@ -52,6 +52,7 @@ egs/*
 # local datasets
 dataset/*
 !dataset/example
+!dataset/musiccaps_example
 
 # personal notebooks & scripts
 */local_scripts
@@ -60,3 +61,6 @@ dataset/*
 /notebooks
 /local_scripts
 /notes
+
+# Checkpoints
+checkpoints/*
