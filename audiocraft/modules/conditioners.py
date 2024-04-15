@@ -1384,8 +1384,8 @@ class ConditionFuser(StreamingModule):
         cross_attention_output = None
         # breakpoint()
         for cond_type, (cond, cond_mask) in conditions.items():
-            if cond_type != 'description':
-                breakpoint()
+            # if cond_type != 'description':
+            #     breakpoint()
             op = self.cond2fuse[cond_type]
             if op == 'sum':
                 input += cond
